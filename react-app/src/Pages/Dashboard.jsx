@@ -12,6 +12,8 @@ import { useState } from "react";
 import LineChart from "../Components/LineChart";
 import BarChart from "../Components/BarChart";
 import Popup from "../Components/Popup";
+import { Button } from "@mui/material";
+
 
 function Dashboard() {
   const [dashboardColor, setDashboardColor] = useState("green");
@@ -21,6 +23,8 @@ function Dashboard() {
   const [advisorColor, setAdvisorColor] = useState("white");
   const [contactColor, setContactColor] = useState("white");
   const [isOpenPopup, setIsOpenPopup] = useState(false);
+  const [selectBox, setSelectBox]=useState("")
+
 
   const handleOpenPopup = () => {
     setIsOpenPopup(true);
@@ -87,6 +91,24 @@ function Dashboard() {
   const data = [10, 30, 40, 20, 50, 70, 40, 80, 30, 10];
   const bdata = [10, 30, 40, 20, 50, 70];
 
+  const randomArrayData = (length) => {
+    const randomArray = [];
+
+    for (let i = 0; i < length; i++) {
+      const randomValue = Math.floor(Math.random() * 10) * 10 + 10;
+      randomArray.push(randomValue);
+    }
+
+    return randomArray;
+  };
+
+  const handleRefresh=()=>{
+    window.location.reload();
+  }
+
+  //console.log(randomArrayData(10))
+  //console.log("select",selectBox)
+
   return (
     <div>
       <nav>
@@ -99,6 +121,9 @@ function Dashboard() {
           </div>
         </div>
         <div className="nav-child-right">
+          <div>
+            <Button variant="contained" color="primary" onClick={handleRefresh}>Random Data</Button>
+          </div>
           <div className="search-box">
             <SearchIcon color="gray" fontSize="small" />
             <input type="text" />
@@ -217,7 +242,7 @@ function Dashboard() {
                 <h3>Checking account</h3>
               </div>
               <div>
-                <select>
+                <select value={selectBox} onChange={(e)=>setSelectBox(e.target.value)}>
                   <option value="manage">Manage</option>
                   <option value="date">Dates</option>
                 </select>
@@ -230,7 +255,7 @@ function Dashboard() {
             </div>
             <hr />
             <div>
-              <LineChart data={data} />
+              <LineChart data={randomArrayData(10)} />
             </div>
             <div className="chart-box-bottom">
               <span>09</span>
@@ -257,7 +282,7 @@ function Dashboard() {
             </div>
             <hr />
             <div>
-              <BarChart data={bdata} />
+              <BarChart data={randomArrayData(6)} />
             </div>
             <div className="chart-box-bottom">
               <span>Older</span>
@@ -298,7 +323,7 @@ function Dashboard() {
             </div>
             <hr />
             <div>
-              <BarChart data={bdata} />
+              <BarChart data={randomArrayData(6)} />
             </div>
             <div className="chart-box-bottom">
               <span>August</span>
